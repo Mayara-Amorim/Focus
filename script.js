@@ -13,6 +13,7 @@ const audioPlay = new Audio('/sons/play.wav');
 const audioPausa = new Audio('/sons/pause.mp3');
 const audioTempoFinalizado = new Audio('./sons/beep.mp3')
 const iniciarOuPausar = document.querySelector("#start-pause span")
+const img = document.querySelector("#start-pause img")
 
 
 let intervaloId = null;
@@ -99,10 +100,12 @@ function inicio() {
     audioPlay.play()
     intervaloId = setInterval(contagemRegressiva, 1000 );
     iniciarOuPausar.textContent = "Pausar"
+    img.setAttribute('src', `/imagens/pause.png`)
     
 }
 function zerar() {
    clearInterval(intervaloId)
    iniciarOuPausar.textContent = "Continuar"
+   img.setAttribute('src', `/imagens/play_arrow.png`)
    intervaloId=null
 }
