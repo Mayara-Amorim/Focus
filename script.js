@@ -12,6 +12,7 @@ const startPauseBT = document.querySelector("#start-pause")
 const audioPlay = new Audio('/sons/play.wav');
 const audioPausa = new Audio('/sons/pause.mp3');
 const audioTempoFinalizado = new Audio('./sons/beep.mp3')
+const iniciarOuPausar = document.querySelector("#start-pause span")
 
 
 let intervaloId = null;
@@ -76,6 +77,7 @@ function alterarContexto (contexto){
             break;
     }
 }
+
 const contagemRegressiva = ()=>{
     if (temporizadorSegundos <=0) {
         audioTempoFinalizado.play()
@@ -96,9 +98,11 @@ function inicio() {
     }
     audioPlay.play()
     intervaloId = setInterval(contagemRegressiva, 1000 );
+    iniciarOuPausar.textContent = "Pausar"
     
 }
 function zerar() {
    clearInterval(intervaloId)
+   iniciarOuPausar.textContent = "Continuar"
    intervaloId=null
 }
