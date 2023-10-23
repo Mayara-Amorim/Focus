@@ -18,7 +18,7 @@ const tempoNaTela = document.querySelector("#timer")
 
 
 let intervaloId = null;
-let temporizadorSegundos = 5;
+let temporizadorSegundos = 1500;//tempo em segundos igual a 25 min.
 
 
 musicaComecar.addEventListener("change", ()=>{
@@ -30,21 +30,25 @@ musicaComecar.addEventListener("change", ()=>{
 })
 
 focoBt.addEventListener('click', ()=>{
+    temporizadorSegundos = 1500
    alterarContexto('foco') //aqui eu removi todos os active e coloco apenas onde foi clicado. Em cada chamada da função alterar contexto eu os removo e add novamente
    focoBt.classList.add('active')
 })
 curtoBt.addEventListener('click', ()=>{
+    temporizadorSegundos = 300
     alterarContexto('descanso-curto')
     curtoBt.classList.add('active')
 })
 longoBt.addEventListener('click', ()=>{
     // html.setAttribute('data-contexto', 'descanso-longo')
     // banner.setAttribute('src', '/imagens/descanso-longo.png')
+    temporizadorSegundos = 900
     alterarContexto('descanso-longo')
     longoBt.classList.add('active')
 })
 
 function alterarContexto (contexto){ 
+    mostrarTempo();
     botoes.forEach(function(contexto){
         contexto.classList.remove('active')
     })
@@ -114,9 +118,12 @@ function zerar() {
 }
 
 function mostrarTempo(){
-    const tempo = temporizadorSegundos//temporizador é decrementado na fução contagem regressiava, eu vou guardar isso na cost tempo e mostro isso na variaavel que tem
-    // o id do meu elem html(tempoNaTela), mostrando o decremento.
-    tempoNaTela.innerHTML = `${tempo}`
+    // const tempo = temporizadorSegundos//temporizador é decrementado na fução contagem regressiava, eu vou guardar isso na cost tempo e mostro isso na variaavel que tem
+    // // o id do meu elem html(tempoNaTela), mostrando o decremento.
+    // tempoNaTela.innerHTML = `${tempo}`
+    const tempo = new Date(temporizadorSegundos * 1000)
+    const tempoFormatado = tempo.toLocaleTimeString('pt-Br', {minute: '2-digit', second:'2-digit'});
+    tempoNaTela.innerHTML = `${tempoFormatado}`
 }
 
 mostrarTempo(); //escopo glonal
