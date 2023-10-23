@@ -14,6 +14,7 @@ const audioPausa = new Audio('/sons/pause.mp3');
 const audioTempoFinalizado = new Audio('./sons/beep.mp3')
 const iniciarOuPausar = document.querySelector("#start-pause span")
 const img = document.querySelector("#start-pause img")
+const tempoNaTela = document.querySelector("#timer")
 
 
 let intervaloId = null;
@@ -78,7 +79,7 @@ function alterarContexto (contexto){
             break;
     }
 }
-
+// é o temporizadorSegundos que guarda o valor decorrido não o IntervaloId
 const contagemRegressiva = ()=>{
     if (temporizadorSegundos <=0) {
         audioTempoFinalizado.play()
@@ -87,6 +88,7 @@ const contagemRegressiva = ()=>{
         return
     }
     temporizadorSegundos-=1
+    mostrarTempo();
     console.log(temporizadorSegundos);
 }
 startPauseBT.addEventListener("click", inicio)
@@ -98,14 +100,23 @@ function inicio() {
       return
     }
     audioPlay.play()
-    intervaloId = setInterval(contagemRegressiva, 1000 );
+    intervaloId = setInterval(contagemRegressiva, 1000 );//Esse metodo recebe 2 parametros:
+    //qual função desejamos executar e de quanto em quanto tempo em milisegundos
     iniciarOuPausar.textContent = "Pausar"
     img.setAttribute('src', `/imagens/pause.png`)
     
 }
 function zerar() {
-   clearInterval(intervaloId)
+   clearInterval(intervaloId)//aqui eu vou INTERROMPER a função setInterval
    iniciarOuPausar.textContent = "Continuar"
    img.setAttribute('src', `/imagens/play_arrow.png`)
    intervaloId=null
 }
+
+function mostrarTempo(){
+    const tempo = temporizadorSegundos//temporizador é decrementado na fução contagem regressiava, eu vou guardar isso na cost tempo e mostro isso na variaavel que tem
+    // o id do meu elem html(tempoNaTela), mostrando o decremento.
+    tempoNaTela.innerHTML = `${tempo}`
+}
+
+mostrarTempo(); //escopo glonal
